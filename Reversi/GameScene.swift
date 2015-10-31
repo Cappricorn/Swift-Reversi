@@ -15,7 +15,7 @@ class GameScene: SKScene {
         // Draw the board
         drawBoard()
         // Add a game piece to the board
-        if let square = squareWithName("b7") {
+        /*if let square = squareWithName("b7") {
             let gamePiece = SKSpriteNode(imageNamed: "Spaceship")
             gamePiece.size = CGSizeMake(24, 24)
             square.addChild(gamePiece)
@@ -24,7 +24,7 @@ class GameScene: SKScene {
             let gamePiece = SKSpriteNode(imageNamed: "Spaceship")
             gamePiece.size = CGSizeMake(24, 24)
             square.addChild(gamePiece)
-        }
+        }*/
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -33,17 +33,18 @@ class GameScene: SKScene {
         for touch in touches {
             let location = touch.locationInNode(self)
             
-            let sprite = SKSpriteNode(imageNamed:"Spaceship")
+            print(location)
+            //let sprite = SKSpriteNode(imageNamed:"Spaceship")
             
-            sprite.xScale = 0.5
-            sprite.yScale = 0.5
-            sprite.position = location
+            //sprite.xScale = 0.5
+            //sprite.yScale = 0.5
+            //sprite.position = location
             
-            let action = SKAction.rotateByAngle(CGFloat(M_PI), duration:1)
+            //let action = SKAction.rotateByAngle(CGFloat(M_PI), duration:1)
             
-            sprite.runAction(SKAction.repeatActionForever(action))
+            //sprite.runAction(SKAction.repeatActionForever(action))
             
-            self.addChild(sprite)
+            //self.addChild(sprite)
         }
     }
     
@@ -63,18 +64,28 @@ class GameScene: SKScene {
                 // Letter for this column
                 let colChar = Array(alphas.characters)[col]
                 // Determine the color of square
-                let color = toggle ? SKColor.whiteColor() : SKColor.blackColor()
-                let square = SKSpriteNode(color: color, size: squareSize)
+                let square = SKSpriteNode()
+                var gamePiece = SKSpriteNode()
+                if toggle {
+                    gamePiece = SKSpriteNode(imageNamed: "fieldblack")
+                    square.name = "\(colChar)\(8-row)-black"
+                } else {
+                    gamePiece = SKSpriteNode(imageNamed: "fieldwhite")
+                    square.name = "\(colChar)\(8-row)-white"
+                }
+                gamePiece.size = CGSizeMake(30, 30)
+                square.addChild(gamePiece)
+                
                 square.position = CGPointMake(CGFloat(col) * squareSize.width + xOffset,
                     CGFloat(row) * squareSize.height + yOffset)
-                // Set sprite's name (e.g., a8, c5, d1)
-                square.name = "\(colChar)\(8-row)"
+                
                 self.addChild(square)
                 toggle = !toggle
             }
             toggle = !toggle
         }
     }
+    
     
     func squareWithName(name:String) -> SKSpriteNode? {
         let square:SKSpriteNode? = self.childNodeWithName(name) as! SKSpriteNode?
