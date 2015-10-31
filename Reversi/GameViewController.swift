@@ -13,6 +13,7 @@ class GameViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        let _ = Reversi()
 
         if let scene = GameScene(fileNamed:"GameScene") {
             // Configure the view.
